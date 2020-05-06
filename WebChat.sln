@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.NetCoreServer", "NetCoreServer\WebChat.NetCoreServer.csproj", "{342EBD63-21A0-49DD-B43B-ABA5438E4A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.NetCoreServer", "WebChat.NetCoreServer\WebChat.NetCoreServer.csproj", "{E101C632-91A4-4A0B-BC61-90F232555499}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.SignalRServer", "SignalRServer\WebChat.SignalRServer.csproj", "{5BBC3CAE-909E-4EED-87DC-3F469184C5C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.SignalRServer", "WebChat.SignalRServer\WebChat.SignalRServer.csproj", "{8AF967C2-7987-48A7-BE34-9CC7E5136722}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Logic", "WebChat.Logic\WebChat.Logic.csproj", "{F1C1A169-F75F-4F40-86DD-63BDFC62830A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.DataAccess", "WebChat.DataAccess\WebChat.DataAccess.csproj", "{6D3D40A4-54BE-446F-B82B-9E879B148216}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Entity", "WebChat.Entity\WebChat.Entity.csproj", "{6A29384F-6F09-486A-B951-A9BF8726F4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{342EBD63-21A0-49DD-B43B-ABA5438E4A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{342EBD63-21A0-49DD-B43B-ABA5438E4A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{342EBD63-21A0-49DD-B43B-ABA5438E4A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{342EBD63-21A0-49DD-B43B-ABA5438E4A7C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BBC3CAE-909E-4EED-87DC-3F469184C5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BBC3CAE-909E-4EED-87DC-3F469184C5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BBC3CAE-909E-4EED-87DC-3F469184C5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BBC3CAE-909E-4EED-87DC-3F469184C5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E101C632-91A4-4A0B-BC61-90F232555499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E101C632-91A4-4A0B-BC61-90F232555499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E101C632-91A4-4A0B-BC61-90F232555499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E101C632-91A4-4A0B-BC61-90F232555499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AF967C2-7987-48A7-BE34-9CC7E5136722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AF967C2-7987-48A7-BE34-9CC7E5136722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AF967C2-7987-48A7-BE34-9CC7E5136722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AF967C2-7987-48A7-BE34-9CC7E5136722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C1A169-F75F-4F40-86DD-63BDFC62830A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C1A169-F75F-4F40-86DD-63BDFC62830A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C1A169-F75F-4F40-86DD-63BDFC62830A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C1A169-F75F-4F40-86DD-63BDFC62830A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3D40A4-54BE-446F-B82B-9E879B148216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3D40A4-54BE-446F-B82B-9E879B148216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3D40A4-54BE-446F-B82B-9E879B148216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3D40A4-54BE-446F-B82B-9E879B148216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A29384F-6F09-486A-B951-A9BF8726F4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A29384F-6F09-486A-B951-A9BF8726F4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A29384F-6F09-486A-B951-A9BF8726F4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A29384F-6F09-486A-B951-A9BF8726F4F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
