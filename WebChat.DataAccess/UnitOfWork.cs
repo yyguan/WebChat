@@ -59,7 +59,6 @@ namespace DataAccess
                 //}
             }
 
-            return 0;
         }
 
         private bool disposed = false;

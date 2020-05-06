@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebChat.DataAccess\WebChat.DataAccess.csproj" />
+    <ProjectReference Include="..\WebChat.Entity\WebChat.Entity.csproj" />
   </ItemGroup>
 
 </Project>

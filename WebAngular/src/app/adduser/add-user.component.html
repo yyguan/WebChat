@@ -5,13 +5,17 @@
 <div >
 
   <ul>
-    <li ><label class="inputLabel">姓名：</label><input type="text" [(ngModel)]="addUser.UserName"></li>
+    <li ><label class="inputLabel">姓名：</label><input type="text" [(ngModel)]="addUser.UserName" (blur)="checkName(event)"></li>
    
-    <li ><label class="inputLabel">邮箱：</label><input type="text" [(ngModel)]="addUser.Email"></li>
-    <li ><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="addUser.LoginName"></li>
-    <li ><label class="inputLabel">手机号码：</label><input type="text" [(ngModel)]="addUser.MobileNumber"></li>
+    <li ><label class="inputLabel">邮箱：</label><input type="text" [(ngModel)]="addUser.Email"  (blur)="checkEmail(event)"></li>
+    <li ><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="addUser.LoginName"  (blur)="checkLoginName(event)"></li>
+    <li ><label class="inputLabel">手机号码：</label><input type="text" [(ngModel)]="addUser.MobilePhone" (blur)="checkMobilePhone(event)"></li>
+    <li ><label class="inputLabel">登录密码：</label><input type="text" [(ngModel)]="addUser.Password"  (blur)="checkPassword(event)"></li>
+    <li ><label class="inputLabel">确认密码：</label><input type="text" [(ngModel)]="confirmPassword" (blur)="checkPassword(event)"></li>
+    <li *ngIf="errorMessage!=''"><label style="width: 100%;background-color: aquamarine;" class="inputLabel">{{errorMessage}}</label></li>
+    <li *ngIf="passwordErrorMessage!=''"><label style="width: 100%;background-color: aquamarine;" class="inputLabel">{{passwordErrorMessage}}</label></li>
   </ul>
-  <button class="btn" (click)="doSubmit()">注册</button>
+  <button class="btn" (click)="doSubmit(event)">注册</button>
   <button class="btn" (click)="getUserInfo()">获取用户信息</button>
 
   <div id="main-container" style="text-align:center">

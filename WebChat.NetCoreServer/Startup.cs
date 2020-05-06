@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using WebChat.NetCoreServer.DependencyInjection;
 
 namespace WebChat.NetCoreServer
 {
@@ -61,7 +62,7 @@ namespace WebChat.NetCoreServer
                 options.IdleTimeout = TimeSpan.FromSeconds(2000);//设置session的过期时间
                 options.Cookie.HttpOnly = true;//设置在浏览器不能通过js获得该cookie的值
             });
-
+            InjectionManager.InjectionClass(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
