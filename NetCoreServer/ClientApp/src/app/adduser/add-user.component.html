@@ -1,0 +1,38 @@
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<div >
+
+  <ul>
+    <li ><label class="inputLabel">姓名：</label><input type="text" [(ngModel)]="addUser.UserName"></li>
+   
+    <li ><label class="inputLabel">邮箱：</label><input type="text" [(ngModel)]="addUser.Email"></li>
+    <li ><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="addUser.LoginName"></li>
+    <li ><label class="inputLabel">手机号码：</label><input type="text" [(ngModel)]="addUser.MobileNumber"></li>
+  </ul>
+  <button class="btn" (click)="doSubmit()">注册</button>
+  <button class="btn" (click)="getUserInfo()">获取用户信息</button>
+
+  
+  <div class="container">
+    <h2>Hello {{nick}}!</h2>
+    <form (ngSubmit)="sendMessage()" #chatForm="ngForm">
+      <div>
+        <label for="message">Message</label>
+        <input type="text" id="message" name="message" [(ngModel)]="message" required>
+      </div>
+      <button type="submit" id="sendmessage" [disabled]="!chatForm.valid">
+        Send
+      </button>
+    </form>
+  </div>
+
+  <div class="container" *ngIf="messages.length > 0">
+    <div *ngFor="let message of messages">
+      <span>{{message}}</span>
+    </div>
+  </div>
+</div>
+
+

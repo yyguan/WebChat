@@ -1,0 +1,17 @@
+
+.inputLabel{
+    width:100px;
+}
+
+
+ul {
+    width: 100%;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    width: 100%;
+    justify-content: left;
+    align-items: center;
+}
