@@ -1,0 +1,57 @@
+<div *ngIf="!connectState">
+<h1>Login and Chat</h1>
+
+<p>This component can do login ,if do login success you chan chat with others.</p>
+
+
+  <ul>
+    <li><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="loginUser.LoginName"
+        (blur)="checkLoginName(event)"></li>
+
+    <li><label class="inputLabel">密码：</label><input type="text" [(ngModel)]="loginUser.Password"
+        (blur)="checkPassword(event)"></li>
+    <li *ngIf="errorMessage!=''"><label style="width: 100%;background-color: aquamarine;"
+        class="inputLabel">{{errorMessage}}</label></li>
+
+  </ul>
+  <div style="width: 600px;">
+    <span style="padding-left: 150px;"><button class="btn" (click)="doSubmit(event)">登录</button></span>
+  </div>
+</div>
+
+<div id="main-container" *ngIf="nick!=''" style="text-align:center">
+  <h1>
+    <a href="https://codingblast.com/asp-net-core-signalr-simple-chat/" target="_new">
+      Chat Room Welcome -  {{nick}}
+    </a>
+  </h1>
+<!--aquamarine-->
+  <div class="container">
+    <label [ngStyle]="styleMethod()"
+      class="inputLabel">{{connectState?"连接成功":"连接失败"}}</label>
+    <form (ngSubmit)="sendMessage()" #chatForm="ngForm">
+      <div>
+        <label for="message">Message</label>
+        <input type="text" id="message" name="message" [(ngModel)]="message" required>
+      </div>
+      <div style="padding-top: 20px;">
+      <button type="submit" id="sendmessage" style="width:100px;height:30px;"  [disabled]="!chatForm.valid">
+        Send
+      </button>
+
+      
+      <button *ngIf="connectState" id="sendmessage" style="width:100px;height:30px;"  (click)="offLine(event)">
+        断开连接
+      </button>
+    </div>
+    </form>
+  </div>
+
+  <div class="container" *ngIf="messages.length > 0" style="height: 350px;scroll-behavior: auto;">
+    <div *ngFor="let message of messages" style="height: 22px;width:100%" >
+      <div [ngStyle]="messageStyle(message.Name)">{{message.Name==nick?"you ":message.Name+" "}}say:{{message.Message}}</div>
+      
+    </div>
+  </div>
+
+</div>

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Entity.v1.models;
+using WebChat.NetCoreServer.Util;
+using WebChat.NetCoreServer.EntityDto;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,12 +15,16 @@ namespace WebChat.NetCoreServer.Controllers
 {
     public class BaseController : Controller
     {
-        private Object _currentUser
+        private User _currentUser
         {
             get;set;
         }
-        public object CurrentUser
+        public User CurrentUser
         {
+            set
+            {
+                _currentUser = value;
+            }
             get
             {
                 return _currentUser;
@@ -30,12 +37,16 @@ namespace WebChat.NetCoreServer.Controllers
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             byte[] result;
-            filterContext.HttpContext.Session.TryGetValue("CurrentUser", out result);
-            // 将获取的byte[] 转换为字符串
-            var UserStr = System.Text.Encoding.UTF8.GetString(result);
-            if (result == null)
+            var user=filterContext.HttpContext.Session.GetString("CurrentUser");
+            if (string.IsNullOrEmpty(user))
             {
-                filterContext.Result = new RedirectResult("/Login/SignIn");
+                //如果没有登录信息,则跳转到登录页面
+                var errorResult = new ResponseDataHelper<UserInfoDto>()
+                {
+                    ResponseCode = -1001,
+                    ResponseMessage = "用户未登录"
+                };
+                filterContext.Result = Json(errorResult);
                 return;
             }
             base.OnActionExecuting(filterContext);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess
 {
-    public class UserRepository:GenericRepository<User>
+    public class UserRepository : GenericRepository<User>
     {
         public UserRepository(ChartContext context) :
             base(context)
@@ -21,6 +21,14 @@ namespace DataAccess
         {
             var query = from user in context.User
                         where user.LoginName == loginName
+                        select user;
+            var result = query.FirstOrDefault();
+            return result;
+        }
+        public User GetByLoginNameAndPassword(string loginName, string password)
+        {
+            var query = from user in context.User
+                        where user.LoginName == loginName && user.Password == password
                         select user;
             var result = query.FirstOrDefault();
             return result;

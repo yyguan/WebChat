@@ -6,6 +6,9 @@ using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Entity.v1.models;
 using WebChat.NetCoreServer.Util;
+using WebChat.NetCoreServer.EntityDto;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,17 +30,59 @@ namespace WebChat.NetCoreServer.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        // GET: api/user/GetCurrentUser
+        [HttpGet("GetCurrentUser")]
+        public ActionResult GetCurrentUser()
+        {
+            var response = new ResponseDataHelper<UserInfoDto>();
+            try
+            {
+                var userString=HttpContext.Session.GetString("CurrentUser");
+                if (!string.IsNullOrEmpty(userString))
+                {
+                    var user=JsonConvert.DeserializeObject<User>(userString);
+                    if (user != null)
+                    {
+                        UserInfoDto userInfo = UserInfoDto.CreateFromUser(user);
+                        response.ResponseData = userInfo;
+                        response.ResponseCode = 0;
+                        response.ResponseMessage = "获取用户信息成功";
+                    }
+                    else
+                    {
+                        response.ResponseCode = -1001;
+                        response.ResponseMessage = "用户未登录";
+                    }
+                }
+                else
+                {
+                    response.ResponseCode = -1001;
+                    response.ResponseMessage = "用户未登录";
+                }
+                //response.PagerData = new PagerHelper()
+                //{
+                //    DataCount = totalCount,
+                //    PageSize = pageSize
+                //};
+            }
+            catch (Exception e)
+            {
+                response.ResponseCode = -1;
+                response.ResponseMessage = e.Message;
+            }
+            return Json(response);
+        }
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var response = new ResponseDataHelper<UserInfo>();
-            
+            var response = new ResponseDataHelper<UserInfoDto>();
+
             try
             {
                 //var user=
                 User u = _userLogic.GetUserById(id);
-                UserInfo userInfo = UserInfo.CreateFromUser(u);
+                UserInfoDto userInfo = UserInfoDto.CreateFromUser(u);
                 response.ResponseData = userInfo;
                 //response.PagerData = new PagerHelper()
                 //{
@@ -58,15 +103,59 @@ namespace WebChat.NetCoreServer.Controllers
         //    UserInfo userInfo =UserInfo.CreateFromUser(u);
         //    return userInfo;
         //}
-        [HttpPost("adduser")]
-        public ActionResult AddUser([FromBody]AddUserInfo userInfo)
+
+        // POST: api/user/UserLogin
+        [HttpPost("userlogin")]
+        public ActionResult UserLogin([FromBody] UserLoginDto userLogin)
         {
-            var response = new ResponseDataHelper<UserInfo>();
+            var response = new ResponseDataHelper<UserInfoDto>();
+            try
+            {
+                var user = _userLogic.GetUserByLoginName(userLogin.LoginName);
+                if (user == null)
+                {
+                    response.ResponseCode = -1;
+                    response.ResponseMessage = "登录名不存在";
+                }
+                else if (user.Password != userLogin.Password)
+                {
+                    response.ResponseCode = -1;
+                    response.ResponseMessage = "密码不正确";
+                }
+                else
+                {
+                    response.ResponseCode = 0;
+                    response.ResponseMessage = "登录成功";
+                    response.ResponseData = UserInfoDto.CreateFromUser(user);
+
+                    HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(user));
+                }
+            }
+            catch (Exception e)
+            {
+                response.ResponseCode = -1;
+                response.ResponseMessage = e.Message;
+            }
+            return Json(response);
+        }
+        [HttpPost("adduser")]
+        public ActionResult AddUser([FromBody]AddUserInfoDto userInfo)
+        {
+            var response = new ResponseDataHelper<UserInfoDto>();
             try
             {
                 //var user=
-                var user = _userLogic.AddUser(userInfo.ToUser());
-                response.ResponseData =UserInfo.CreateFromUser(user); 
+                var user = _userLogic.GetUserByLoginName(userInfo.LoginName);
+                if (user == null)
+                {
+                    user = _userLogic.AddUser(userInfo.ToUser());
+                    response.ResponseData = UserInfoDto.CreateFromUser(user);
+                }
+                else
+                {
+                    response.ResponseCode = -1;
+                    response.ResponseMessage = "登录名已存在";
+                }
             }
             catch (Exception e)
             {
@@ -92,45 +181,6 @@ namespace WebChat.NetCoreServer.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-    }
-    public class AddUserInfo:UserInfo
-    {
-        public string Password { get; set; }
-        public User ToUser()
-        {
-            User u = new User
-            {
-                Id = this.Id,
-                Email = this.Email,
-                LoginName = this.LoginName,
-                MobilePhone = this.MobilePhone,
-                UserName = this.UserName,
-                CreateTime = DateTime.Now,
-                Password = this.Password
-            };
-            return u;
-        }
-    }
-    public class UserInfo
-    {
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string LoginName { get; set; }
-        public string MobilePhone { get; set; }
-        public int Id { get; set; }
-
-        public static UserInfo CreateFromUser(User u)
-        {
-            UserInfo user = new UserInfo
-            {
-                Id = u.Id,
-                Email = u.Email,
-                LoginName = u.LoginName,
-                MobilePhone = u.MobilePhone,
-                UserName = u.UserName
-            };
-            return user;
         }
     }
 }

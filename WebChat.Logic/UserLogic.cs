@@ -15,6 +15,10 @@ namespace Logic
         {
             return work.UserRepository.GetByID(id);
         }
+        public User GetUserByUserNameAndPassword(string loginName,string password)
+        {
+            return work.UserRepository.GetByLoginNameAndPassword(loginName, password);
+        }
         public User AddUser(User user, bool needsave=true)
         {
             save(() =>

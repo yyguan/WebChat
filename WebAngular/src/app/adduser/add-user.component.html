@@ -5,7 +5,7 @@
 <div >
 
   <ul>
-    <li ><label class="inputLabel">姓名：</label><input type="text" [(ngModel)]="addUser.UserName" (blur)="checkName(event)"></li>
+    <li ><label class="inputLabel">昵称：</label><input type="text" [(ngModel)]="addUser.UserName" (blur)="checkName(event)"></li>
    
     <li ><label class="inputLabel">邮箱：</label><input type="text" [(ngModel)]="addUser.Email"  (blur)="checkEmail(event)"></li>
     <li ><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="addUser.LoginName"  (blur)="checkLoginName(event)"></li>
@@ -14,10 +14,14 @@
     <li ><label class="inputLabel">确认密码：</label><input type="text" [(ngModel)]="confirmPassword" (blur)="checkPassword(event)"></li>
     <li *ngIf="errorMessage!=''"><label style="width: 100%;background-color: aquamarine;" class="inputLabel">{{errorMessage}}</label></li>
     <li *ngIf="passwordErrorMessage!=''"><label style="width: 100%;background-color: aquamarine;" class="inputLabel">{{passwordErrorMessage}}</label></li>
+    <li *ngIf="loginSuccess">
+      <label style="width: 100px;background-color:green;color:white;" class="inputLabel">注册成功</label>
+    </li>
   </ul>
-  <button class="btn" (click)="doSubmit(event)">注册</button>
-  <button class="btn" (click)="getUserInfo()">获取用户信息</button>
-
+  <span style="padding-left:150px;"><button class="btn" (click)="doSubmit(event)">注册</button></span>
+  <button class="btn" (click)="getToLogin()">去登录</button>
+  <button class="btn" (click)="getUserInfo()" style="display: none;">获取用户信息</button>
+<!-- 
   <div id="main-container" style="text-align:center">
     <h1>
       <a href="https://codingblast.com/asp-net-core-signalr-simple-chat/" target="_new">
@@ -45,5 +49,5 @@
     </div>
   
   </div>
-
+ -->
 

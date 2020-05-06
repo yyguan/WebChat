@@ -19,7 +19,7 @@ import { map, catchError } from 'rxjs/operators';
 export class AddUserComponent implements OnInit {
   private _hubConnection: HubConnection;
   public forecasts: WeatherForecast[];
-
+  loginSuccess: boolean = false;
   nick = '';
   message = '';
   messages: string[] = [];
@@ -50,7 +50,12 @@ export class AddUserComponent implements OnInit {
       .invoke('sendToAll', this.nick, this.message)
       .catch(err => console.error(err));
   }
+  //修改注册成功状态,默认修改为false
+  changeLoginSuccess(result:boolean=false){
+    this.loginSuccess=result;
+  }
   checkPassword(event) {
+    this.changeLoginSuccess();
     this.checkPasswordResult = true;
     this.passwordErrorMessage = '';
     //alert("111");
@@ -91,7 +96,7 @@ export class AddUserComponent implements OnInit {
   getUserInfo() {
 
     this.baseUrl = "http://localhost:52287/";
-    let id = 1;
+    let id = 2;
     var url = this.baseUrl + "api/User/" + id.toString();
     var result = this.http.get<ResponseData<UserEntity>>(url)
       // .pipe(
@@ -118,18 +123,20 @@ export class AddUserComponent implements OnInit {
       });;
   }
   checkName(event) {
+    this.changeLoginSuccess();
     this.errorMessage = "";
-    if (this.addUser.UserName == '' || this.addUser.UserName.length < 6) {
+    if (this.addUser.UserName == '' || this.addUser.UserName.length < 2) {
       this.checkResult = false;
-      if (this.errorMessage.indexOf("姓名长度") == -1) {
-        this.addErrorMessage('姓名长度至少为6');
+      if (this.errorMessage.indexOf("昵称长度") == -1) {
+        this.addErrorMessage('昵称长度至少为2');
       }
     } else {
-      this.errorMessage = this.errorMessage.replace("姓名长度至少为6,", "");
-      this.errorMessage = this.errorMessage.replace("姓名长度至少为6", "");
+      this.errorMessage = this.errorMessage.replace("昵称长度至少为2,", "");
+      this.errorMessage = this.errorMessage.replace("昵称长度至少为2", "");
     }
   }
   checkEmail(event) {
+    this.changeLoginSuccess();
     this.errorMessage = "";
     this.checkName(event);
     if (this.addUser.Email == '' || this.addUser.Email.length < 8) {
@@ -143,6 +150,7 @@ export class AddUserComponent implements OnInit {
     }
   }
   checkLoginName(event) {
+    this.changeLoginSuccess();
     this.errorMessage = "";
     this.checkName(event);
     this.checkEmail(event);
@@ -158,6 +166,7 @@ export class AddUserComponent implements OnInit {
     }
   }
   checkMobilePhone(event) {
+    this.changeLoginSuccess();
     this.checkName(event);
     this.checkEmail(event);
     this.checkLoginName(event);
@@ -174,6 +183,9 @@ export class AddUserComponent implements OnInit {
       this.errorMessage = this.errorMessage.replace("手机号码至少为11", "");
     }
   }
+  getToLogin(){
+    window.location.href="/login";
+  }
   doCheck(event) {
     this.checkResult = true;
     this.errorMessage = '';
@@ -189,12 +201,17 @@ export class AddUserComponent implements OnInit {
       return;
     }
     var url = this.baseUrl + "api/User/AddUser";
-    var result = this.http.post<UserEntity>(url, this.addUser)
+    var result = this.http.post<ResponseData<UserEntity>>(url, this.addUser)
       // .pipe(
       //   map<AddUserEntity>(UTIL.getResponseBody),
       //   catchError(UTIL.handleResponseError)
       // )
       .subscribe(ret => {
+        if (ret.responseCode == 0) {
+          this.changeLoginSuccess(true);
+        }else{
+          this.errorMessage=ret.responseMessage;
+        }
         console.log(ret);
         // if (ret.isSuccess) {
         //    console.log(JSON.stringify( ret.data));
@@ -212,20 +229,20 @@ export class AddUserComponent implements OnInit {
 
 
   ngOnInit() {
-    this.nick = window.prompt('Your name:', 'John');
+    // this.nick = window.prompt('Your name:', 'John');
 
-    this._hubConnection = new HubConnection('http://localhost:5000/chat');
+    // this._hubConnection = new HubConnection('http://localhost:5000/chat');
 
-    this._hubConnection
-      .start()
-      .then(() => console.log('Connection started!'))
-      .catch(err => console.log('Error while establishing connection :('));
+    // this._hubConnection
+    //   .start()
+    //   .then(() => console.log('Connection started!'))
+    //   .catch(err => console.log('Error while establishing connection :('));
 
-    this._hubConnection.on('sendToAll', (nick: string, receivedMessage: string) => {
-      console.log(`recive data:nicek=${nick},message=${receivedMessage}`);
-      const text = `${nick}: ${receivedMessage}`;
-      this.messages.push(text);
-    });
+    // this._hubConnection.on('sendToAll', (nick: string, receivedMessage: string) => {
+    //   console.log(`recive data:nicek=${nick},message=${receivedMessage}`);
+    //   const text = `${nick}: ${receivedMessage}`;
+    //   this.messages.push(text);
+    // });
 
   }
 

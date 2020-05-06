@@ -30,7 +30,12 @@
                 
                 <li [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/add-user"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Add User
+                        <span class='glyphicon glyphicon-th-list'></span> 注册
+                    </a>
+                </li>
+                <li [routerLinkActive]='["link-active"]'>
+                    <a [routerLink]='["/login"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> 登录与聊天
                     </a>
                 </li>
             </ul>

@@ -2,51 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebChat.NetCoreServer.EntityDto;
+using WebChat.NetCoreServer.Util;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace WebChat.NetCoreServer.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginController : Controller
     {
-        // GET: api/Login
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private UserLogic _userLogic;
+        //private IHttpContextAccessor _accessor;
+        public LoginController(UserLogic userlogic)
         {
-            return new string[] { "value1", "value2" };
+            _userLogic = userlogic;
+            //_accessor = accessor;
         }
 
-        // GET: api/Login/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // POST: api/login/userlogin
+        [HttpPost("userlogin")]
+        public ActionResult UserLogin([FromBody] UserLoginDto userLogin)
         {
-            return "value";
-        }
+            var response = new ResponseDataHelper<UserInfoDto>();
+            try
+            {
+                var user = _userLogic.GetUserByLoginName(userLogin.LoginName);
+                if (user == null)
+                {
+                    response.ResponseCode = -1;
+                    response.ResponseMessage = "登录名不存在";
+                }
+                else if (user.Password != userLogin.Password)
+                {
+                    response.ResponseCode = -1;
+                    response.ResponseMessage = "密码不正确";
+                }
+                else
+                {
+                    response.ResponseCode = 0;
+                    response.ResponseMessage = "登录成功";
+                    response.ResponseData = UserInfoDto.CreateFromUser(user);
 
-        // POST: api/Login/UserLogin
-        [HttpPost(Name ="UserLogin")]
-        public void UserLogin([FromBody] string value)
-        {
-
+                    HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(user));
+                }
+            }
+            catch (Exception e)
+            {
+                response.ResponseCode = -1;
+                response.ResponseMessage = e.Message;
+            }
+            return Json(response);
         }
         // POST: api/Login
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] UserLoginDto userLogin)
         {
+            return null;
         }
 
-        // PUT: api/Login/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
