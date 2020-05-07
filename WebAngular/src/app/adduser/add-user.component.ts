@@ -6,6 +6,7 @@ import { UTIL } from "../share/utilities";
 import { HubConnection } from '@aspnet/signalr-client';
 import { ResponseData } from '../share/model'
 import { map, catchError } from 'rxjs/operators';
+import { BaseUrlConfig}from '../share/model'
 
 
 //import * as signalR from "@aspnet/signalr";
@@ -38,10 +39,10 @@ export class AddUserComponent implements OnInit {
 
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
 
-    this.baseUrl = "http://localhost:52287/";
-    http.get<WeatherForecast[]>(this.baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+    this.baseUrl = BaseUrlConfig.url;
+    // http.get<WeatherForecast[]>(this.baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
+    //   this.forecasts = result;
+    // }, error => console.error(error));
   }
 
 
@@ -95,7 +96,7 @@ export class AddUserComponent implements OnInit {
   }
   getUserInfo() {
 
-    this.baseUrl = "http://localhost:52287/";
+    this.baseUrl = BaseUrlConfig.url;
     let id = 2;
     var url = this.baseUrl + "api/User/" + id.toString();
     var result = this.http.get<ResponseData<UserEntity>>(url)
@@ -200,6 +201,7 @@ export class AddUserComponent implements OnInit {
     if (!this.checkResult || !this.checkPasswordResult) {
       return;
     }
+    this.baseUrl=BaseUrlConfig.url;
     var url = this.baseUrl + "api/User/AddUser";
     var result = this.http.post<ResponseData<UserEntity>>(url, this.addUser)
       // .pipe(

@@ -115,6 +115,19 @@ export class AddVoteInfoComponent implements OnInit {
     this.checkTitle(event);
   }
 
+  checkLoginName(event) {
+    this.errorMessage = "";
+    if (this.loginUser.LoginName == '' || this.loginUser.LoginName.length < 4) {
+      this.checkResult = false;
+
+      if (this.errorMessage.indexOf("登录名长度") == -1) {
+        this.addErrorMessage('登录名长度至少为4');
+      }
+    } else {
+      this.errorMessage = this.errorMessage.replace("登录名长度至少为4,", "");
+      this.errorMessage = this.errorMessage.replace("登录名长度至少为4", "");
+    }
+  }
   checkPassword(event) {
 
     this.errorMessage = "";
@@ -132,6 +145,7 @@ export class AddVoteInfoComponent implements OnInit {
   doCheck(event) {
     this.checkResult = true;
     this.errorMessage = '';
+    this.checkLoginName(event);
     this.checkPassword(event);
   }
   doSubmit(event) {

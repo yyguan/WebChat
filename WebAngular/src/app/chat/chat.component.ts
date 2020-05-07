@@ -6,7 +6,7 @@ import { UTIL } from "../share/utilities";
 import { HubConnection } from '@aspnet/signalr-client';
 import { ResponseData } from '../share/model';
 import { map, catchError } from 'rxjs/operators';
-import { UserEntity } from '../share/model';
+import { UserEntity,BaseUrlConfig } from '../share/model';
 
 
 //import * as signalR from "@aspnet/signalr";
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
 
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
 
-    this.baseUrl = "http://localhost:52287/";
+    this.baseUrl = BaseUrlConfig.url;
 
   }
 
@@ -46,6 +46,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     //this.nick = window.prompt('Your name:', 'John');
     
+    this.baseUrl = BaseUrlConfig.url;
     var url = this.baseUrl + "api/user/GetCurrentUser";
     var result = this.http.get<ResponseData<UserEntity>>(url )
       // .pipe(

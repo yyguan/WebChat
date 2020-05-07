@@ -1,13 +1,12 @@
-<h1>Weather forecast</h1>
+<h1>Login and GetVotes</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 
 <div>
-  <h1>Login and Chat</h1>
+  <h2>Login GetVotes</h2>
 
-  <p>This component can do login ,if do login success you chan chat with others.</p>
+  <p>This component can do login ,if do login success you GetVoteList.</p>
   <ul>
-    <li><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="loginUser.LoginName"></li>
+    <li><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="loginUser.LoginName" (blur)="checkLoginName(event)"></li>
 
     <li><label class="inputLabel">密码：</label><input type="text" [(ngModel)]="loginUser.Password"
         (blur)="checkPassword(event)"></li>

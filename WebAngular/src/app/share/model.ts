@@ -13,3 +13,6 @@ export class UserEntity {
     email: string;
     id: Number
   }
+  export class BaseUrlConfig{
+      static url:string="http://localhost:54961/";
+  }
