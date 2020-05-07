@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using WebChat.DataAccess;
 
 namespace DataAccess
 {
@@ -35,6 +35,45 @@ namespace DataAccess
             }
         }
 
+        private VoteInfoRepository voteInfoRepository;
+        public VoteInfoRepository VoteInfoRepository
+        {
+            get
+            {
+                if (this.voteInfoRepository == null)
+                {
+                    this.voteInfoRepository = new VoteInfoRepository(context);
+                }
+                return voteInfoRepository;
+            }
+        }
+
+
+        private VoteDetailRepository voteDetailRepository;
+        public VoteDetailRepository VoteDetailRepository
+        {
+            get
+            {
+                if (this.voteDetailRepository == null)
+                {
+                    this.voteDetailRepository = new VoteDetailRepository(context);
+                }
+                return voteDetailRepository;
+            }
+        }
+
+        private UserVoteRepository userVoteRepository;
+        public UserVoteRepository UserVoteRepository
+        {
+            get
+            {
+                if (this.userVoteRepository == null)
+                {
+                    this.userVoteRepository = new UserVoteRepository(context);
+                }
+                return userVoteRepository;
+            }
+        }
 
         /// <summary>
         /// 保存当前上下文的修改

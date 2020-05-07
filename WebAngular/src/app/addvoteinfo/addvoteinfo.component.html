@@ -1,0 +1,49 @@
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<div>
+  <h1>Login and Chat</h1>
+
+  <p>This component can do login ,if do login success you chan chat with others.</p>
+  <ul>
+    <li><label class="inputLabel">登录名：</label><input type="text" [(ngModel)]="loginUser.LoginName"></li>
+
+    <li><label class="inputLabel">密码：</label><input type="text" [(ngModel)]="loginUser.Password"
+        (blur)="checkPassword(event)"></li>
+    <li *ngIf="errorMessage!=''"><label style="width: 100%;background-color: aquamarine;"
+        class="inputLabel">{{errorMessage}}</label></li>
+
+  </ul>
+  <div style="width: 600px;">
+    <span style="padding-left: 150px;"><button class="btn" (click)="doSubmit(event)">登录</button></span>
+    
+  <button class="btn" (click)="getVoteInfoList()">获取投票列表信息</button>
+  </div>
+</div>
+
+
+
+<div>
+
+
+
+  <table class='table' *ngIf="voteInfos">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>创建人</th>
+        <th>投票主题</th>
+        <th>创建时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let voteInfo of voteInfos">
+        <td>{{ voteInfo.id }}</td>
+        <td>{{ voteInfo.createUserName }}</td>
+        <td>{{ voteInfo.title }}</td>
+        <td>{{ voteInfo.createDateTime }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

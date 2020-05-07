@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebChat.Entity.v1.models;
 
 namespace Entity.v1.models
 {
@@ -17,6 +18,10 @@ namespace Entity.v1.models
 
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLogin> UserLogin { get; set; }
+
+        public virtual DbSet<VoteInfo> VoteInfo { get; set; }
+        public virtual DbSet<VoteDetail> VoteDetail { get; set; }
+        public virtual DbSet<UserVote> UserVote { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,6 +65,32 @@ namespace Entity.v1.models
                 entity.Property(e => e.LoginStatus).HasMaxLength(128);
 
                 entity.Property(e => e.LoginTime).HasColumnType("datetime");
+            });
+
+
+            modelBuilder.Entity<VoteInfo>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.CreateUserName).IsUnicode(true).HasMaxLength(128);
+                entity.Property(e => e.Title).IsUnicode(true).HasMaxLength(128);
+
+                entity.Property(e => e.CreateDateTime).HasColumnType("datetime");
+            });
+
+
+            modelBuilder.Entity<VoteDetail>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.ItemTitle).HasMaxLength(128);
+            });
+
+
+            modelBuilder.Entity<UserVote>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
             });
         }
     }

@@ -19,7 +19,7 @@ namespace Logic
             }
 
         }
-        protected UnitOfWork work = new UnitOfWork();
+        public UnitOfWork work = new UnitOfWork();
 
         /// <summary>
         /// 标记Dispose()方法是否被调用过

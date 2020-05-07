@@ -37,6 +37,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AddUserComponent } from './adduser/add-user.component';
 import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component'
+import { AddVoteInfoComponent } from './addvoteinfo/addvoteinfo.component'
 
 
 
@@ -49,7 +50,8 @@ import { ChatComponent } from './chat/chat.component'
     FetchDataComponent,
     AddUserComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    AddVoteInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +64,9 @@ import { ChatComponent } from './chat/chat.component'
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-user', component: AddUserComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'chat', component: ChatComponent }
+      { path: 'chat', component: ChatComponent },
+      { path: 'addvoteinfo', component: AddVoteInfoComponent }
+      
     ])
   ],
   providers: [],
